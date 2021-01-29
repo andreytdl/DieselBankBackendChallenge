@@ -1,4 +1,5 @@
 import AppError from "@shared/errors/Error";
+import { subHours } from "date-fns";
 import TransactionRequest from "../dtos/TransactionRequest";
 import ProviderRepositoryType from "../models/ProviderRepositoryType";
 
@@ -8,6 +9,9 @@ export default class ProviderRepository implements ProviderRepositoryType {
     private provider2Statement: TransactionRequest[] = [];
 
     constructor(){
+        const acceptableDay = subHours(new Date(), 24).getDate()
+        const acceptableHour = subHours(new Date(), 24).getHours()
+
         //Static Transactions database
         //Filling the provider's database with statements
         this.provider1Statement = [
@@ -15,7 +19,7 @@ export default class ProviderRepository implements ProviderRepositoryType {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -23,7 +27,7 @@ export default class ProviderRepository implements ProviderRepositoryType {
                 transactionId: "es$%r%$c4312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -35,7 +39,7 @@ export default class ProviderRepository implements ProviderRepositoryType {
                 transactionId: "es$%r%$123#21ctv3",
                 description: `CASH OUT VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "4000",
                 type: "DEBIT"
             },
@@ -43,7 +47,7 @@ export default class ProviderRepository implements ProviderRepositoryType {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "1000",
                 type: "CREDIT"
             },

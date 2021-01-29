@@ -7,7 +7,7 @@ export default class ReconciliationService {
 
     private dateFormat: string = "yyyy-MM-dd HH:mm:ss"
 
-    execute(binoBank: BinoBankRepositoryType, providers: ProviderRepositoryType): number {
+    execute(binoBank: BinoBankRepositoryType, providers: ProviderRepositoryType) {
 
         //Getting the provider's statements
         const provider1Statements = providers.getStatement('provider1')
@@ -86,9 +86,5 @@ export default class ReconciliationService {
             newTransaction ? binoBank.addToBinoBank(newTransaction) : null
         })
 
-        //Returning the new User's Balance
-        const { balance } = binoBank.getUser().getBalance()
-
-        return balance;
     }
 }

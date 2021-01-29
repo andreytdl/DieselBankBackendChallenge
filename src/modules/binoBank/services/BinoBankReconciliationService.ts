@@ -11,14 +11,13 @@ export default class BinoBankReconciliationService{
         this.reconcile = new ReconciliationService();
     }
 
-    async execute(binoBank: BinoBankRepositoryType, providers: ProviderRepositoryType): Promise<number | void> {
+    async execute(binoBank: BinoBankRepositoryType, providers: ProviderRepositoryType): Promise<void> {
         //Getting the async-lock library to let the concurrency safe
         const lock = new AsyncLock.default({timeout: 5000})
         
         //The lock will keep the concurrency safe
-        return await lock.acquire('key', async () => {
-            const newBalance = this.reconcile.execute(binoBank, providers);
-            return newBalance
+        await lock.acquire('key', async () => {
+            this.reconcile.execute(binoBank, providers);
         })
         
     }

@@ -20,7 +20,14 @@ npm install
 yarn dev:server
 ~~~
 
-4 - On the second terminal you run
+4 - The transaction will not be sincronized yet, so if you send a get request for the url <i>http://localhost:3333/notify</i> you will receive
+~~~javascript
+    {
+        balance: 0
+    }
+~~~
+
+5 - On the second terminal you run
 ~~~bash
 yarn cronjob
 ~~~
@@ -32,7 +39,14 @@ You can simulate the webhook if you send a post notification to
 http://localhost:3333/notify
 ~~~
 
-5 - To run the tests i made you can execute:
+6 - The transaction will be sincronized now, so if you send a get request for the url <i>http://localhost:3333/notify</i> you will receive
+~~~javascript
+    {
+        balance: 1000
+    }
+~~~
+
+7 - To run the tests i made you can execute:
 ~~~bash
 yarn test
 ~~~

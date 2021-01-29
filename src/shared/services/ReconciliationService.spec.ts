@@ -1,8 +1,21 @@
 import FakeBinoBankRepository from "@modules/binoBank/repositories/fakes/FakeBinoBankRepository";
 import FakeProviderRepository from "@modules/providers/repositories/fakes/FakeProviderRepository";
 import ReconciliationService from "./ReconciliationService";
+import { subHours, getDate } from 'date-fns'
 
 describe('Reconciliate', () => {
+
+    const acceptableDay = subHours(new Date(), 24).getDate()
+    const acceptableHour = subHours(new Date(), 24).getHours()
+
+    const notAcceptableDay = subHours(new Date(), 60).getDate()
+    const notAcceptableHour = subHours(new Date(), 60).getHours()
+
+
+    console.log('today: ', new Date())
+    console.log('Day: ', notAcceptableDay)
+    console.log('hour: ', notAcceptableHour)
+
     it('should be able to reconciliate only provider1', () => {
         //Creating the repositories
         const binoBank = new FakeBinoBankRepository()
@@ -14,7 +27,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -22,7 +35,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$c4312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -30,7 +43,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH OUT VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "4000",
                 type: "DEBIT"
             },
@@ -38,7 +51,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "1000",
                 type: "CREDIT"
             },
@@ -48,7 +61,7 @@ describe('Reconciliate', () => {
 
         reconciliationService.execute(binoBank, providers)
 
-        const balance = binoBank.getUser().getBalance().balance
+        const { balance } = binoBank.getUser().getBalance()
 
         //expected balance
         expect(balance).toBe(1000);
@@ -66,7 +79,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -74,7 +87,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$c4312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -82,7 +95,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH OUT VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "4000",
                 type: "DEBIT"
             },
@@ -90,7 +103,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "1000",
                 type: "CREDIT"
             },
@@ -100,7 +113,7 @@ describe('Reconciliate', () => {
 
         reconciliationService.execute(binoBank, providers)
 
-        const balance = binoBank.getUser().getBalance().balance
+        const { balance } = binoBank.getUser().getBalance()
 
         //expected balance
         expect(balance).toBe(1000);
@@ -117,7 +130,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -125,7 +138,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$c4312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -137,7 +150,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$123#21ctv3",
                 description: `CASH OUT VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "4000",
                 type: "DEBIT"
             },
@@ -145,7 +158,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "1000",
                 type: "CREDIT"
             },
@@ -155,7 +168,7 @@ describe('Reconciliate', () => {
 
         reconciliationService.execute(binoBank, providers)
 
-        const balance = binoBank.getUser().getBalance().balance
+        const { balance } = binoBank.getUser().getBalance()
 
         //expected balance
         expect(balance).toBe(1000);
@@ -172,7 +185,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -180,7 +193,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$c4312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -192,7 +205,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%asc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -200,7 +213,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%1234312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -210,8 +223,8 @@ describe('Reconciliate', () => {
 
         reconciliationService.execute(binoBank, providers)
 
-        const balance = binoBank.getUser().getBalance().balance
-
+        const { balance } = binoBank.getUser().getBalance()
+        
         //expected balance
         expect(balance).toBe(4000);
 
@@ -229,7 +242,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             }
@@ -241,7 +254,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$c4312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -253,7 +266,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -261,7 +274,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$c4312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -273,7 +286,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%asc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -281,7 +294,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%1234312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-27 05:20:15",
+                entryDate: `2021-01-${acceptableDay} ${acceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -291,7 +304,7 @@ describe('Reconciliate', () => {
 
         reconciliationService.execute(binoBank, providers)
 
-        const balance = binoBank.getUser().getBalance().balance
+        const { balance } = binoBank.getUser().getBalance()
 
         //expected balance
         expect(balance).toBe(4000);
@@ -309,7 +322,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-25 05:20:15",
+                entryDate: `2021-01-${notAcceptableDay} ${notAcceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             }
@@ -321,7 +334,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$cc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-20 05:20:15",
+                entryDate: `2021-01-${notAcceptableDay} ${notAcceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -329,7 +342,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%$c4312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-20 05:20:15",
+                entryDate: `2021-01-${notAcceptableDay} ${notAcceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -341,7 +354,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%r%asc1#21ctv3",
                 description: `CASH IN VIA PIX`,
                 transactionType: "PIX",
-                entryDate: "2021-01-25 05:20:15",
+                entryDate: `2021-01-${notAcceptableDay} ${notAcceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -349,7 +362,7 @@ describe('Reconciliate', () => {
                 transactionId: "es$%1234312321ctv3",
                 description: `CASH IN VIA CARD`,
                 transactionType: "CARD",
-                entryDate: "2021-01-25 05:20:15",
+                entryDate: `2021-01-${notAcceptableDay} ${notAcceptableHour}:20:15`,
                 amount: "2000",
                 type: "DEBIT"
             },
@@ -359,7 +372,7 @@ describe('Reconciliate', () => {
 
         reconciliationService.execute(binoBank, providers)
 
-        const balance = binoBank.getUser().getBalance().balance
+        const { balance } = binoBank.getUser().getBalance()
 
         //expected balance
         expect(balance).toBe(2000);
