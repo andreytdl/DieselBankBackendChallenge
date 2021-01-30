@@ -20,7 +20,7 @@ npm install
 yarn dev:server
 ~~~
 
-4 - The transaction will not be sincronized yet, so if you send a get request for the url <i>http://localhost:3333/notify</i> you will receive
+4 - The transaction will not be sincronized yet, so if you send a get request for the url <i>http://localhost:3333/balance</i> you will receive
 ~~~javascript
     {
         balance: 0
@@ -39,7 +39,7 @@ You can simulate the webhook if you send a post notification to
 http://localhost:3333/notify
 ~~~
 
-6 - The transaction will be sincronized now, so if you send a get request for the url <i>http://localhost:3333/notify</i> you will receive
+6 - The transaction will be sincronized now, so if you send a get request for the url <i>http://localhost:3333/balance</i> you will receive
 ~~~javascript
     {
         balance: 1000
